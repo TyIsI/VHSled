@@ -45,7 +45,7 @@ c = randomColor()
 setFullColor(ledpixels,spidev,c)
 
 # a few nice and bright colours with at least one channel at full.
-###background_colors = [Color(0,255,0),Color(0,0,255),Color(255,255,0),Color(255,0,255),Color(0,255,255)]
+bright_colors = [Color(255,0,0),Color(0,255,0),Color(0,0,255),Color(255,255,0),Color(255,0,255),Color(0,255,255)]
 background_colors = [Color(0,0,0),Color(255,0,0),Color(0,255,0),Color(0,0,255)]
 text_colors = [Color(0,0,0),Color(255,0,0),Color(0,255,0),Color(0,0,255)]
 
@@ -75,6 +75,15 @@ while (not os.path.exists("/home/pi/stop")):
 		if debug:
 			print "word"
 		displayTextOnce(ledpixels,spidev,characters,random.choice(strings),random.choice(text_colors),random.choice(background_colors),(interval*2))
+	elif colorSwitch == 1:
+		fade = random.randint(0,2)
+		if fade == 0:
+			fadeInColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
+		elif fade == 1:
+			fadeOutColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
+		elif fade == 2:
+			fadeInColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
+			fadeOutColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
 	elif colorSwitch < randomMax:
 		if debug:
 			print "flash"

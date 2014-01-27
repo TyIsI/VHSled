@@ -109,3 +109,18 @@ def rainbowCycle(pixels,spidev, wait):
 				setpixelcolor(pixels, i,k, Wheel( (((i*len(pixels)+k) * 256 / ((len(pixels)*len(pixels[0]))) + j)) % 256) )
 		writestrip(pixels,spidev)
 		time.sleep(wait)
+
+def fadeInColor(pixels,spidev, c, delay):
+	for brightness in range(8):
+		for i in range(len(pixels)):
+			for j in range(len(pixels[0])):
+				setpixelcolor(pixels, i,j, c)
+		writestripWithBrightness(pixels,spidev,(brightness*32))
+
+def fadeOutColor(pixels,spidev, c, delay):
+	for brightness in range(8):
+		for i in range(len(pixels)):
+			for j in range(len(pixels[0])):
+				setpixelcolor(pixels, i,j, c)
+		writestripWithBrightness(pixels,spidev,(255-(brightness*32)))
+		###time.sleep(delay/255)
