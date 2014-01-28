@@ -12,7 +12,7 @@ GPIO.setmode(GPIO.BCM)
 #properties of our display
 width = 42
 height = 10
-strings = ["  PEACE","  LOVE","  VHS!"," WE <3 U","  PLUR","  RAEV","  HEY","  HACK!","VANCOUVER"," SPACE"]
+strings = ["  PEACE","  LOVE","  VHS!"," WE <3 U","  PLUR","  RAEV","  HEY","  HACK!","  YVR"," SPACE"]
 
 ledpixels = []
 for i in range(0,width):
@@ -36,7 +36,7 @@ enableWords = 1
 brightness = 0xCC
 
 ## Debug
-debug = 0
+verbose = 1
 
 ###r = requests.get( 'http://www.random.org/integers/?num=100&min=0&max=2&col=1&base=10&format=plain&rnd=new' )
 
@@ -49,7 +49,7 @@ bright_colors = [Color(255,0,0),Color(0,255,0),Color(0,0,255),Color(255,255,0),C
 background_colors = [Color(0,0,0),Color(255,0,0),Color(0,255,0),Color(0,0,255)]
 text_colors = [Color(0,0,0),Color(255,0,0),Color(0,255,0),Color(0,0,255)]
 
-while (not os.path.exists("/home/pi/stop")):
+while (not os.path.exists("./stop")):
 	action = random.randint(0,2)
 	###loopmod = random.randint(2,3)
 	loopmod = 2
@@ -68,33 +68,33 @@ while (not os.path.exists("/home/pi/stop")):
 	colorSwitch = random.randint(0,randomMax)
 
 	if colorSwitch == 0 and showClock == 1:
-		if debug:
+		if verbose:
 			print "clock"
         	clockTextOnce(ledpixels,spidev,characters,":",random.choice(background_colors),Color(0,0,0),loopinterval)
 	elif colorSwitch == 0 and enableWords == 1:
-		if debug:
+		if verbose:
 			print "word"
 		displayTextOnce(ledpixels,spidev,characters,random.choice(strings),random.choice(text_colors),random.choice(background_colors),(interval*2))
 	elif colorSwitch == 1:
 		fade = random.randint(0,2)
 		if fade == 0:
 			fadeInColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
+			fadeOutColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
 		elif fade == 1:
 			fadeOutColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
 		elif fade == 2:
 			fadeInColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
-			fadeOutColor(ledpixels, spidev,random.choice(bright_colors),loopinterval)
 	elif colorSwitch < randomMax:
-		if debug:
+		if verbose:
 			print "flash"
 		###colorFlashMode(ledpixels,spidev,random.randint(0,20),loopinterval)
 		colorFlashMode(ledpixels,spidev,random.randint(0,1),loopinterval)
 	elif colorSwitch == randomMax:
-		if debug:
+		if verbose:
 			print "clear"
 		setFullColor( ledpixels, spidev, 0 )
 		time.sleep( loopinterval )
 
 spidev.close()
-if debug:
+if verbose:
 	print "stopping led display"
