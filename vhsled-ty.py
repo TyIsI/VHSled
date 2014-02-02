@@ -28,7 +28,7 @@ interval = float( 250 / bpm )
 interval = 0.125
 
 ## enableClock (or not)
-enableClock = 1
+enableClock = 0
 showClock = enableClock
 ## enableWords
 enableWords = 1
@@ -36,7 +36,7 @@ enableWords = 1
 brightness = 0xCC
 
 ## Debug
-verbose = 1
+verbose = 0
 
 ###r = requests.get( 'http://www.random.org/integers/?num=100&min=0&max=2&col=1&base=10&format=plain&rnd=new' )
 

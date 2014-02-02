@@ -72,7 +72,10 @@ def clockText(pixels,spidev, characters,colon, text_c, background_c,speed):
         while True:
                 text_matrix = []
                 now = datetime.datetime.now()
-                for char in str(now.hour):
+		hour = str(now.hour)
+		if len(hour) == 1:
+			hour = " " + hour
+        	for char in hour:
                         w, columns = characters[char.upper()]
                         for i,c in enumerate(columns):
                                 text_matrix.append(c[::-1])
@@ -111,7 +114,10 @@ def clockTextOnce(pixels,spidev, characters,colon, text_c, background_c,speed):
         #assemble the matrix components of the time
         text_matrix = []
         now = datetime.datetime.now()
-        for char in str(now.hour):
+	hour = now.hour
+	if len(str(hour)) == 1:
+		hour = " " + hour
+        for char in hour:
                 w, columns = characters[char.upper()]
                 for i,c in enumerate(columns):
                         text_matrix.append(c[::-1])
