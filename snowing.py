@@ -12,7 +12,7 @@ GPIO.setmode(GPIO.BCM)
 #properties of our display
 width = 42
 height = 10
-strings = ["  PEACE","  LOVE","  VHS!"," WE <3 U","  PLUR","  RAEV","  HEY","  HACK!","  YVR"," SPACE"]
+strings = ["  SNOW"]
 
 ledpixels = []
 for i in range(0,width):
@@ -28,12 +28,11 @@ interval = float( 250 / bpm )
 ###interval = 0.5
 ###interval = 0.250
 interval = 0.125
-###interval = 0.062
 ###interval = float( 0.125 / 2 )
 ###interval = 1/3
 
 ## enableClock (or not)
-enableClock = 1
+enableClock = 0
 showClock = enableClock
 ## enableWords
 enableWords = 1
@@ -75,8 +74,7 @@ while (not os.path.exists("./stop")):
 	if colorSwitch == 0 and showClock == 1:
 		if verbose:
 			print "clock"
-        	clockTextOnce(ledpixels,spidev,characters,":",random.choice(background_colors),Color(0,0,0))
-		time.sleep(loopinterval)
+        	clockTextOnce(ledpixels,spidev,characters,":",random.choice(background_colors),Color(0,0,0),loopinterval)
 	elif colorSwitch == 0 and enableWords == 1:
 		if verbose:
 			print "word"

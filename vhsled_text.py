@@ -6,7 +6,7 @@ from vhsled_colour import *
 
 
 characters = {}
-with open('/home/pi/font.txt', 'r') as m_f:
+with open('font.txt', 'r') as m_f:
         m_lines = m_f.readlines()
         for m_i in range(0,len(m_lines),10):
                 m_character = m_lines[m_i][0]
@@ -107,15 +107,15 @@ def clockText(pixels,spidev, characters,colon, text_c, background_c,speed):
                 writestrip(text_matrix[0:len(pixels)],spidev)
                 time.sleep(speed)
 
-def clockTextOnce(pixels,spidev, characters,colon, text_c, background_c,speed):
-        setFullColor(pixels,spidev,background_c)
+def clockTextOnce(pixels,spidev, characters,colon, text_c, background_c):
+        ###setFullColor(pixels,spidev,Color(0,0,0))
         padding_pixels = pixels
         character_spacing = [0 for i in range(len(pixels[0]))]
         #assemble the matrix components of the time
         text_matrix = []
         now = datetime.datetime.now()
-	hour = now.hour
-	if len(str(hour)) == 1:
+	hour = str(now.hour)
+	if len(hour) == 1:
 		hour = " " + hour
         for char in hour:
                 w, columns = characters[char.upper()]
@@ -147,7 +147,6 @@ def clockTextOnce(pixels,spidev, characters,colon, text_c, background_c,speed):
                         text_matrix[x][y] = text_c if row==1 else background_c
                 text_matrix = text_matrix+pixels
         writestrip(text_matrix[0:len(pixels)],spidev)
-        time.sleep(speed)
 
 def displayTextOnce(pixels,spidev, characters,text, text_c, background_c,speed):
         setFullColor(pixels,spidev,background_c)
